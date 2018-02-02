@@ -53,7 +53,7 @@ Andrea Ferlini\\
 \begin{abstract}
 Battery-free sensors widespread usage as identifiers of clothes, manufacturing parts, etc. rises several challenges during the inventory process. These are mainly due to their short range reliability.
 
-Yunfei Ma et al. addressed the aforementioned issue using a drone which acts as a relay. This work aims to review their proposal of enhancement for battery-free sensors range.
+Yunfei Ma et al. addressed the aforementioned issue using a drone which acts as a relay. This work aims to review their proposal of enhancement for battery-free sensors range.\\
 \end{abstract}
 
 \keywords{Battery-Free Sensors, Mobile Networks,
@@ -65,20 +65,21 @@ At \textit{SIGCOMM17}, Yunfei Ma et al. presented "Drone Relays for Battery-Free
 In their paper, Yunfei Ma et al. introduce RFly, a full-duplex relay for battery-free networks which leverages on drones. RFly preserves phase and timing of the forwarded packets, allowing the Radio Frequency Localisation (RF-Localisation).
 
 \subsection{Context}
-Nowadays Radio Frequency Identification (RFID) widely adopted to identify an tracks objects both in factories, warehouses and supply chains. Furthermore, the RFID market is currently the fastest growing market of network devices, accounting more than 5 billion units in 2016. Since RIFD are battery free devices that can not be powered from long distances, they have a low distance range reliability (less than 5m) \cite{RFID1:Ukkonen, RFID2:Lee, RFID3:Yojima}, and that has strong impacts on the way inventory are performed. In fact, the employee has to walk around the warehouses with the reader, to scan the entire content of the warehouse, wasting an enormous amount of time.
+Nowadays, Radio Frequency Identification (RFID) are widely adopted to identify an tracks objects both in factories, warehouses and supply chains. Furthermore, the RFID market is currently the fastest growing market of network devices, accounting more than 5 billion units in 2016. Since RIFD are battery free devices that can not be powered from long distances, they have a low distance range reliability (less than 5m) \cite{RFID1:Ukkonen, RFID2:Lee, RFID3:Yojima}, and that has strong impacts on the way inventory are performed. In fact, the employee has to walk around the warehouses with the reader, to scan the entire content of the warehouse, wasting an enormous amount of time.
 
 Past literature presents a variety of approaches on relay designs, long-range backscatter communication and localisation. However, they require expensive battery supplied tags and  none of them is applied to RFID commercial deployments.
 
-Recently, several startups have started investigating the problem. Their proposals leverage on drones for the inventory control as well \cite{StartUp:CNN, StartUp:Eyesee}. Despite RFly, all of them mount either a camera or a barcode reader on a drone, being only able to catalog the objects in line-of-sight. Another startup \cite{StartUp:Yard} and other research bodies \cite{DroneRFID:Longhi, DroneRFID:Swedberg} have tried to place the RFID reader directly on the drone. Although it may seem to be the easiest approach, readers are heavy and bulky and it must adopt more powerful drones (e.g. delivery drones) to carry such a payload. The need of bigger drones limits, for safety reasons, the candidate applications to the only outdoors ones. For that reason, Yunfei Ma et al. has prototyped RFly, which is lighter and smaller, and can be carried by small drones. 
+Recently, several startups have started investigating the problem. Their proposals leverage on drones for the inventory control as well \cite{StartUp:CNN, StartUp:Eyesee}. Despite RFly, all of them mount either a camera or a barcode reader on a drone, being only able to catalog the objects in line-of-sight. Another startup \cite{StartUp:Yard} and other research bodies \cite{DroneRFID:Longhi, DroneRFID:Swedberg} have tried to place the RFID reader directly on the drone. Although it may seem to be the easiest approach, readers are heavy and bulky and we have to adopt more powerful drones (e.g. delivery drones) to carry such a payload. The need of bigger drones limits, for safety reasons, the candidate applications to the only outdoors ones. For that reason, Yunfei Ma et al. have prototyped RFly, which is lighter and smaller, and can be carried by smaller drones. 
 
 \subsection{Contributions}
-RFly is an RFID relay system that leverages on the agility of drones to extend the range of operation of a RFID Reader. According to their design, the drones act as a "full duplex repeater" between the readers and the tag. The Reader becomes then capable to sense and localise items in non line-of-sight setting over a wider area. 
-In particular, the relay carried by the drone receive the queries transmitted by the readers (downlink), it filters, amplifies and then forwards them again to reach the RFID. The same process is done in the opposite direction (uplink) sending back to the reader the RFID's backscattered reply. 
-One main advantage of using a drone is that is able to fly over the whole warehouse, with no blind spots.
+RFly is an RFID relay system that leverages on the agility of drones to extend the range of operation of a RFID Reader. According to their design, the drones act as a "full duplex repeater" between the readers and the tag. The reader becomes then capable to sense and localise items placed in a non line-of-sight setting over a wide area. 
+In particular, the relay carried by the drone receives the queries transmitted by the readers (downlink), filters, amplifies and then forwards them to the RFID. The same process is done in the opposite direction (uplink) sending back to the reader the RFID's backscattered replies.
+
+The main advantage of the proposed solution relies is the use of a drone able to fly over the whole warehouse, without having blind spots.
 In order to behave as described by the authors, RFly must have the three following key features:
 
 \begin{itemize}
-  \item Maintain the natural bidirectional full-duplex communications, to behave as a transparent relay.
+  \item Maintaining of the natural bidirectional full-duplex communications, to behave as a transparent relay.
   \item Phase and time characteristics preserving, to permit the RF localisation.
   \item A compact design, to cope with the aerodynamic constrains and the limited payload that can be carried by a drone.
 \end{itemize}
@@ -86,57 +87,57 @@ In order to behave as described by the authors, RFly must have the three followi
 The aforementioned characteristics are achieved by:
 
 \begin{itemize}
-  \item Frequency detachment between Reader-Relay and Relay-RFID Tag "half-channels" to avoid relay self-interference \ref{interference} resulting in an unstable system.
+  \item Frequency detachment between the Reader-Relay and Relay-Tag channels. That permits to avoid relay self-interference [Figure \ref{interference}], which leads to an unstable system.
   \item The self-interference cancellation is entirely done in the analog domain, thus preserving the time characteristics.
-  \item Since the link separation involves a carrier frequency shift, it introduces a a phase offset. Thus the system is designed in a symmetric way, so using the same oscillator for the down-link and the up-link and then cancel the phase offset \ref{schematic}.
-1  \end{itemize}
+  \item Since the link separation involves a carrier frequency shift, it introduces a phase offset. The system is designed in a symmetric way, so that is possible to use the same oscillator for both the down-link and the up-link, cancelling the phase offset [Figure \ref{schematic}].
+\end{itemize}
 
 \begin{figure}[h]
 	\centering
 	\label{interference}
-	\includegraphics[height=4cm, keepaspectratio]{images/Sources-of-self-interference.jpg}
-	\caption{Sources of self-interference {\normalfont \textit{Intra-link}: the forwarded signal feeds back to the receive antenna. \textit{Inter-link}: signal from uplink leak into the downlink or vice-versa due to poor filtering.}}
+	\includegraphics[width=\linewidth, keepaspectratio]{images/Sources-of-self-interference.jpg}
+	\caption{Sources of self-interference {\normalfont \textit{Intra-link}: the forwarded signal feeds back to the receiver antennas. \textit{Inter-link}: the signal from uplink leaks into the downlink or vice-versa due to poor filtering.}}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\label{schematic}
-	\includegraphics[height=4cm, keepaspectratio]{images/Relay-schema.jpg}
-	\caption{Relay block schema. {\normalfont Demodulation and demodulationare required to separate the two halfs of the Reader-tag links. Symmetry is required to enable RF localization. Filtering is necessary to avoid \textit{Inter-link} interference.}}
+	\includegraphics[width=\linewidth, keepaspectratio]{images/Relay-schema.jpg}
+	\caption{Relay block schema. {\normalfont The modulation and the demodulation are required to separate the two halves of the Reader-Tag links. Symmetry is required to enable RF localisation. Filtering is necessary to avoid \textit{Inter-link} interference.}}
 \end{figure}
 
 
-Using a drone as carrier of the relay, allows to exploit the relay motion. This way is possible the implementation of a localisation method inspired to Synthetic Aperture Radar (SAR) \cite{SAR:Curlander, SAR:Kumar, SAR:Wang}. Capturing the RIFD responses from different points along the trajectory of the drone, the SAR equation can be applied to locate the RFID tag with respect to the drone position. The reader itself processes the localisation. It collects the RFID tag responses and reconstructs the distances with respect to the drone path.
+Using a drone as carrier of the relay, allows to exploit the relay motion. This way, it is possible to implement the localisation method inspired to a Synthetic Aperture Radar (SAR) \cite{SAR:Curlander, SAR:Kumar, SAR:Wang}. Capturing the RIFD responses from different points along the trajectory of the drone, the SAR equation can be applied to locate the RFID tag with respect to the drone position. The reader itself does the localisation. It collects the RFID tag responses and reconstructs the distances with respect to the path of the drone.
 
 \begin{figure}[h]
 	\centering
 	\label{sar}
 	\includegraphics[height=4cm, keepaspectratio]{images/Phase-entanglement.jpg}
-	\caption{Relay motion effect. {\normalfont Contribution of the two half-links to the phase of the signal received by the reader.}}
+	\caption{Relay motion effect. {\normalfont Contributions of the two half-links to the phase of the signal received by the reader.}}
 \end{figure}
 
-Since the relay is moving as well, the recovered distances have an additional components due to the drone path (Fig. \ref{sar}). Meaning that the SAR equation can not be directly applied. To remove this interfering term from the final equation, the authors include an RFID tag in the drone to recognise its spurious contribution.
-To successfully implement their localisation technique, the authors also address the multipath interference. The way they do it is simple but smart: they get rid of the "ghost" location produced by the environment reflections. 
+Since the relay is moving as well, the recovered distances have an additional component due to the path of the drone [Figure \ref{sar}]. Meaning that the SAR equation can not be directly applied. To remove this interfering term from the final equation, the authors include an RFID tag on the drone to recognise its spurious contribution.
+To successfully implement their localisation technique, the authors have also to address the multipath interference. The way they do it is simple but smart: they get rid of the "ghost" locations produced by the environment reflections. 
 
-Yunfei Ma et al. actually built the prototype, showing the following:
+Yunfei Ma et al. actually build the prototype, showing the following:
 
 \begin{itemize}
   \item The range over which the reader can communicate is extended from less than 10m to above 50m.
-  \item The localisation accuracy is quite high. Although it decreases with the distance, remains below one meter of median error, even if the distance is more than 50 meters between the RFID tag and the reader.
-  \item Thanks to a custom PCB board the the final size of the relay is 10cm x 7.5cm. The total weight is 35g significantly below the payload limits of a indoor drones (about 200g)
+  \item The localisation accuracy is quite high. Although it decreases with the distance, remains below one meter of median error, even if the distance, between the RFID tag and the reader, is more than 50 meters.
+  \item Thanks to a custom PCB board, the final size of the relay is 10cm x 7.5cm. The total weight is 35g, significantly below the payload limits of an indoor drones (about 200g).
 \end{itemize}
 
-Furthermore, the authors proved that RFly is transparent to the RFID protocol. Thus meaning it can be deployed over the existing infrastructure and that it's possible to leverage past work to cope with multiple tag or multiple readers interferences.
+Furthermore, the authors prove that RFly is transparent to the RFID protocol. Meaning that it can be deployed over the existing infrastructure. Thus, it is possible to leverage on past works to cope with multiple tags or multiple readers interferences.
 
 Yunfei Ma et al.'s proposal is not a complete solution and it has some limitations:. 
 \begin{itemize}
-	\item The authors relied on an external vision-based navigation system (OptiTrack \cite{Optitrack}) to provide navigation, obstacle avoidance and stabilisation to the drone.
-	\item The operation range of the prototype they developed is still bounded to 55 meters, which is not enough to cover large warehouses areas.
+	\item The authors rely on an external vision-based navigation system (OptiTrack \cite{Optitrack}) to provide navigation, obstacle avoidance and stabilisation to the drone.
+	\item The operation range of the prototype is still bounded to 55 meters, which is not enough to cover large warehouses areas.
 \end{itemize}
 
-However, the authors proposed some reasonable direction that can be followed in future works to solve the current limitations.
+However, the authors propose some reasonable directions that can be followed in future works to solve the current limitations.
 
-Summing up, RFly provide a big step forward in long-range communication and localisation in battery-free networks. It also opens new research opportunity to combine drone agility with RF sensing techniques.
+Summing up, RFly provides a big step forward in long-range communication and localisation in battery-free networks. It also opens new research opportunities to combine drones agility with RF sensing techniques.
 %------------------------------------------------
 
 \section{Critical Analysis}
@@ -161,50 +162,49 @@ The authors describe the proposed solution in an extremely clear way, without be
 %DONE- for each solution they described the possible issues and they addressed them with a proper explanation
 
 %PROOF STRENGTHS
-One of the strongest point of this work is that the team build a prototype to test their solution in practice. Yunfei Ma et al. developed the relay circuit on a custom PCB board and they mounted it on a Parrot Bebop. The real implementation of the solution gives an edge to this work because t prove that it is not only a theoretical concept, but that it actually works.
-Then, they run different experiments in a testbed environment to prove the accuracy of the system:
+One of the strongest points of this work is that the team build a prototype to actually test their solution. Yunfei Ma et al. develop the relay circuit on a custom PCB board and they mount it on a Parrot Bebop. The real implementation of the solution gives an edge to this work, since it proves that it is not only a theoretical concept, but that works in practice.
+As a proof of concept, they run different experiments in a testbed environment to see the accuracy of the system:
 \begin{itemize}
-	\item \textit{Inter} and \textit{Intra} link isolation measurement (the higher the Isolation, the higher is the achievable range extension)
-	\item Phase preservation through the relay process (required to perform RF localization)
-	\item Range evaluation by assessing the reading rate of the tag with respect to its distance from the reader. (Relay-RFID tag kept restricted to 3-5m)
-	\item Localization accuracy with respect to the tag-reader distance.
-	\item SAR aperture influence on the localization accuracy. (useful to tune the localization algorithm)
+	\item \textit{Inter} and \textit{Intra} link isolation measurement (the higher is the isolation, and the larger is the achievable range extension).
+	\item Phase preservation through the relay process (required to perform RF localisation).
+	\item Range evaluation, assessing the reading rate of the tag with respect to its distance from the reader (keeping the relay-RFID tag distance from 3 to 5m).
+	\item Localisation accuracy with respect to the tag-reader distance.
+	\item SAR aperture influence on the localisation accuracy (useful to adjust the tuning of the localisation algorithm).
 \end{itemize}
 
-The authors presented the result with clear and meaningful graphs, together with detailed descriptions that point out the relevant insights.
+The authors present the result with clear and meaningful graphs, together with detailed descriptions that point out the most relevant insights.
 
 \subsection{Weaknesses}
 %TEST ENVIRONMENT DESCRIPTION
-Although the paper is complete and well structured, in our opinion, Yunfei Ma et al. didn't provide meaningful insights on the implementability of their solution in a real case scenario rather than a minimal testbed environment as described in the evaluation section of the paper.
-In particular, the authors didn't give an evaluation of the performance against:
+Although the paper is complete and well structured, in our opinion, Yunfei Ma et al. do not provide meaningful insights on the actual implementation of their solution in a real case scenario. They showcase everything in a bounded testbed environment as described in the evaluation section of the paper.
+In particular, the authors do not give an evaluation of the performance against:
 \begin{itemize}
-	\item the number of tags in the range of the relay, which is likely to be quite high in a real warehouse.
-	\item the complexity of the environment layout which affect the magnitude of the multipath propagation.
+	\item The number of tags in the range of the relay, which is very likely to be quite high in a real warehouse.
+	\item The complexity of the environment layout, which affects the magnitude of the multipath propagation.
 \end{itemize} 
 %DONE - not very clear the test environment, they didn't try it in a real environment with hundreds of tags, with multiple obstacles (multipath recovery could be difficult in such case) (BETTER DESCRIPTION OF THE TESTING ENVIRONMENT -> NOT REPRODUCIBLE e.g. obstacles? number of tags? )
 
 %LACK OF CITATIONS
-Plus, they claim that since the relay is transparent to the RFID protocol, RFly can come with multiple readers interference, leveraging on previous work. However, they don't properly cite any paper on the topic neither prove that the frequency shift technique that they use in the \textit{intra-link} isolation doesn't affect the existent interference avoidance algorithms.
+Moreover, they claim that the relay is transparent to the RFID protocol. Because of that, RFly can cope with multiple readers interference, leveraging on previous works. However, they neither cite any of those, nor prove that the frequency shift technique, used for the \textit{intra-link} isolation, does not affect the existent interference avoidance algorithms.
 %DONE - theoretically they claimed that it can cope with multiple readers, but not proven that the relay frequency shifting doesn't affect the existing protocols for coexistence of readers (IN FACT THEY REFER TO PRECEDENT WORKS, NOT CITED)
 
-Talking about the localization method, there are no information about the complexity of the algorithm that they implemented which, in our opinion could be interesting to evaluate the scalability of the algorithm with respect to the number of tags that has to be localized. Furthermore, The authors state in the abstract that the scope of their research is to provide a seamless relay that can be deployed in an existing infrastructure. Although the designed system is transparent to the RFID protocol, it require to deploy an ad-hoc reader designed and programmed to execute the localization algorithm (collecting multiple responses along the drone path, computing the position estimation, interfacing with the warehouse database, matching the locations with a map of the warehouse).
+Concerning the localisation method, there are no information about the complexity of the algorithm. According to us, it could be interesting to evaluate its scalability with respect to the number of tags that has to be localised. Furthermore, the authors state in the abstract that the scope of their research is to provide a seamless relay that can be deployed in an existing infrastructure. Although the designed system is transparent to the RFID protocol, it requires the deployment of an ad-hoc reader designed and programmed to execute the localisation algorithm. Meaning that it has to collect multiple responses along the drone path, estimate the position, be interfaced with the warehouse database and match the locations with a map of the warehouse.
 %NOT CLEAR FOR WHO IS NOT IN THE BUSINESS
 %- Not clear how they will address the information processing once gathered by the reader in an existing deployed RFID structure. How they interface with commercial readers and which kind of system will implement the SAR-like localisation algorithm (they used a USRP radio -> custom, to be able to recover the timing and phases to reconstruct the path)
 
 %LATENCY AND COMPLEXITY
 % done - No information on the complexity of the algorithm and the time required to compute the estimated location of the tag (+ RESOLUTION)
-Moreover, Yunfei Ma et al. claimed that is possible to extend the same localization algorithm to a 3D case (tags displaced at different heights) if the drone describes 2D trajectories. However, no further proof is given, neither any brief theoretical description of the approach that should be taken to construct a system that gathers enough data to implement a 3D SAR-based localization algorithm. 
+Yunfei Ma et al. claim that is possible to extend the same localisation algorithm to a 3D case (tags displaced at different heights) if the drone describes 2D trajectories. However, they neither give any further proof, nor any theoretical description of the approach that should be followed to build a system able to gather enough data to implement a 3D SAR-based localisation algorithm. 
 %DONE - theoretically the localisation is possible in 3D, but it's not proved neither described how to proceed to implement it (what about required drone movements? and computational time?)
 
 
 %DRONE LIMITATIONS 
-To conclude, as the authors indicate at the end of their paper, some work is missing on the drone control. In their experiment they exploit an expensive infra-red camera system to track the drone position.
+To conclude, as the authors underline at the end of their paper, some work is missing on the drone control side. In their experiments they exploit an expensive infra-red camera system to track the drone position, and this is not always reproducible in a real deployment.
 %DRONE - no mention to autonomy of the drone. who decides the path, who keeps the trace of the drone position to retrieve the absolute position of the tags in the area (not only w.r.t. the drone). Battery duration and recharging?
 
 \section{Conclusion}
 
-SUMMARY OF BEST STRENGTHS COMPARED WITH WEAKNESSES
-Even if genial and everything (it is a big first step into long distance backscattering communication) is still far from a real product...
+There are no doubts that this paper is an enormous step forward for the long-range communication and localisation. However, concerning the automatisation of the inventory processes, it gives only some valuable hints. In fact, even if the proposed solution is genial, it is still far away from being a real, deployable product.
 
 \begin{thebibliography}{1}
 
@@ -264,16 +264,16 @@ J. Wang and D. Katabi., "Dude, where's my card? RFID positioning that works with
 In ACM SIGCOMM, 
 2013.
 
-\bibitem{case1:Walmart}
-New York Times. Walmart looks to drones to speed distribution. https://www.nytimes.com/2016/06/03/business/walmart-looks-to-drones-to-speed-distribution.html.
-
-\bibitem{case2:Amazon}
-USA Today. Amazon just opened a grocery store without a check-out line.\\
-http://www.usatoday.com/story/tech/news/2016/12/05/amazon-go-supermarket-no-checkout-no-cashiers-articial-intelligence-sensors/94991612/.
-
 \bibitem{Optitrack}
 Optitrack.
 http://www.optitrack.com.
+
+\bibitem{case1:Walmart}
+New York Times. Walmart looks to drones to speed distribution. https://www.nytimes.com/2016/06/03/business/\\walmart-looks-to-drones-to-speed-distribution.html.
+
+\bibitem{case2:Amazon}
+USA Today. Amazon just opened a grocery store without a check-out line.\\
+http://www.usatoday.com/story/tech/news/2016/\\12/05/amazon-go-supermarket-no-checkout-no-cashiers-articial-intelligence-sensors/94991612/.
 
 \end{thebibliography}
 
